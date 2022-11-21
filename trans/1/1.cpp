@@ -114,15 +114,51 @@ public:
     }
 };
 string Num2Uper::digits_[10] = { "零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖" };
-string Num2Uper::unit_1[13] = { "", "拾", "佰", "千", "万", "拾", "佰", "千", "亿", "拾", "佰", "千","万" };
+string Num2Uper::unit_1[13] = { "", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟","万" };
 string Num2Uper::unit_2[2] = { "角", "分" };
 string digits[10] = { "零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖" };
-string unit1[13] = { "", "拾", "佰", "千", "万", "拾", "佰", "千", "亿", "拾", "佰", "千","万" };
+string unit1[13] = { "", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟","万" };
 string unit2[2] = { "角", "分" };
-void Transform(string s)
+
+
+//大写转数字
+string Transform(string input)
 {
+    string copy_input = input;
+    for (int i = 0; i < 13; i++) {
+        int temp = 0;
+        if (copy_input.find("零") != string::npos) copy_input = copy_input.replace(copy_input.find("零"), 2, "0");
+        if (copy_input.find("壹") != string::npos) copy_input = copy_input.replace(copy_input.find("壹"), 2, "1");
+        if (copy_input.find("贰") != string::npos) copy_input = copy_input.replace(copy_input.find("贰"), 2, "2");
+        if (copy_input.find("叁") != string::npos) copy_input = copy_input.replace(copy_input.find("叁"), 2, "3");
+        if (copy_input.find("肆") != string::npos) copy_input = copy_input.replace(copy_input.find("肆"), 2, "4");
+        if (copy_input.find("伍") != string::npos) copy_input = copy_input.replace(copy_input.find("伍"), 2, "5");
+        if (copy_input.find("陆") != string::npos) copy_input = copy_input.replace(copy_input.find("陆"), 2, "6");
+        if (copy_input.find("柒") != string::npos) copy_input = copy_input.replace(copy_input.find("柒"), 2, "7");
+        if (copy_input.find("捌") != string::npos) copy_input = copy_input.replace(copy_input.find("捌"), 2, "8");
+        if (copy_input.find("玖") != string::npos) copy_input = copy_input.replace(copy_input.find("玖"), 2, "9");
+    }
+    if (copy_input.find("元整") != string::npos) copy_input = copy_input.erase(copy_input.find("元整"), 4);
+    if (copy_input.rfind('亿') == copy_input.length() - 1) copy_input = copy_input + "00000000";
+    if (copy_input.rfind('万') == copy_input.length() - 1) copy_input = copy_input + "0000";
+    if (copy_input.rfind('百') == copy_input.length() - 1) copy_input = copy_input + "00";
+    if (copy_input.rfind('十') == copy_input.length() - 1) copy_input = copy_input + "0";
+
+    if (copy_input.find("亿") != string::npos) copy_input = copy_input.erase(copy_input.find("亿"), 2);
+    if (copy_input.find("万") != string::npos) copy_input = copy_input.erase(copy_input.find("万"), 2);
+
+    for (int i = 0; i < 5; i++) {
+        int temp = 0;
+        if (copy_input.find("佰") != string::npos) copy_input = copy_input.erase(copy_input.find("佰"), 2);
+        if (copy_input.find("仟") != string::npos) copy_input = copy_input.erase(copy_input.find("仟"), 2);
+        if (copy_input.find("拾") != string::npos) copy_input = copy_input.erase(copy_input.find("拾"), 2);
+    }
+    return copy_input;
 
 }
+
+
+
 int main(int argc, const char **argv)
 {
     string str;
@@ -154,8 +190,8 @@ int main(int argc, const char **argv)
                 cout << "请输入金额：" << endl;
                 cin >> str;
                 if (str == "-1") break;
-                Transform(str);
-                cout << "123"<<endl;
+   
+                cout << Transform(str) <<endl;
                 cout << "选择转换模式:" << endl;
             }break;
         }
