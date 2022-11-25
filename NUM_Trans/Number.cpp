@@ -14,4 +14,3 @@ void Number::Display0() {
 	}
 	cout << output << endl;
 }
-
